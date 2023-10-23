@@ -31,10 +31,11 @@ def get_fruityvice_data(this_fruit_choice):
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
+streamlit.header('Advice')
 try:
     fruit_choice = streamlit.text_input('¿Sobre qué fruta le gustaría obtener información?', 'Kiwi')
     if not fruit_choice:
-        streamlit.write('El usuario ingresó ', fruit_choice)
+        streamlit.error('please select a fruit to get information')
     else:
         back_from_function = get_fruityvice_data(fruit_choice)
         streamlit.dataframe(back_from_function)
