@@ -52,8 +52,8 @@ def get_fruit_load_list():
 if streamlit.button('Get fruit load list'):
     try:
         my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-        my_data_row = get_fruit_load_list()
-        streamlit.text("Data from Snowflake:", my_data_row)
+        my_data_rows = get_fruit_load_list()
+        streamlit.dataframe("Data from Snowflake:", my_data_rows)
     except Exception as e:
         streamlit.error("Error connecting to Snowflake or retrieving data.")
         streamlit.error(str(e))
