@@ -46,3 +46,7 @@ my_data_row = my_cur.fetchone()
 streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
+
+streamlit.header("Fruityvice Fruit Advice!")
+fruit_choice = streamlit.text_input('¿Que fruta le gustaria añadir?','Kiwi') 
+streamlit.write('El usuario ingresó ', fruit_choice)
