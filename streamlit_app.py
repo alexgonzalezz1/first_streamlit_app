@@ -29,7 +29,7 @@ streamlit.dataframe(fruits_to_show)
 streamlit.header("Fruityvice Fruit Advice!")
 
 try:
-fruit_choice = streamlit.text_input('¿Sobre qué fruta le gustaría obtener información?','Kiwi') 
+  fruit_choice = streamlit.text_input('¿Sobre qué fruta le gustaría obtener información?','Kiwi') 
   if not fruit_choice:
         streamlit.write('El usuario ingresó ', fruit_choice)
   else:
