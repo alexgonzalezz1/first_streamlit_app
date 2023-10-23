@@ -1,5 +1,5 @@
 import streamlit
-import pandas 
+import pandas
 import snowflake.connector
 import requests
 from urllib.error import URLError
@@ -31,6 +31,8 @@ def get_fruityvice_data(this_fruit_choice):
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
+my_cnx = None  # Inicializa la variable my_cnx
+
 try:
     fruit_choice = streamlit.text_input('¿Sobre qué fruta le gustaría obtener información?', 'Kiwi')
     if not fruit_choice:
@@ -56,6 +58,7 @@ streamlit.header("Fruityvice Fruit Advice!")
 fruit_choice = streamlit.text_input('¿Qué fruta le gustaría añadir?', 'Kiwi')
 streamlit.write('El usuario ingresó ', fruit_choice)
 streamlit.write('Thanks for adding', fruit_choice)
-my_cur = my_cnx.cursor()
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
-my_cnx.commit()
+
+if my_cnx:  # Comprueba si my_cnx está definido
+    my_cur = my_cnx.cursor()
+    my_cur.execute("insert into fruit_load_list values ('from streamlit')")
