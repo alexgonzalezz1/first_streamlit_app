@@ -31,7 +31,7 @@ def get_fruityvice_data(this_fruit_choice):
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
-streamlit.header('Advice')
+
 try:
     fruit_choice = streamlit.text_input('¿Sobre qué fruta le gustaría obtener información?', 'Kiwi')
     if not fruit_choice:
@@ -49,7 +49,7 @@ def get_fruit_load_list():
         my_cur.execute("select * pc_rivery_db.public.from fruit_load_list")
     return my_cur.fetchall()
 
-# ...
+
 if streamlit.button('Get fruit load list'):
     try:
         my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
@@ -62,7 +62,7 @@ if streamlit.button('Get fruit load list'):
 
 def insert_row_snowflake(new_fruit):
      with my_cnx.cursor() as my_cur:
-        my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
+        my_cur.execute("insert into fruit_load_list values ('from streamlit')")
      return "Thansk for adding " + new_fruit
 
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
