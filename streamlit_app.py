@@ -48,17 +48,29 @@ def get_fruit_load_list():
         my_cur.execute("select * from fruit_load_list")
     return my_cur.fetchall()
 
+# ...
 if streamlit.button('Get fruit load list'):
-    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-    my_data_row = get_fruit_load_list()
-    streamlit.dataframe(my_data_row)
+    try:
+        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+        my_data_row = get_fruit_load_list()
+        streamlit.text("Data from Snowflake:", my_data_row)
+    except Exception as e:
+        streamlit.error("Error connecting to Snowflake or retrieving data.")
+        streamlit.error(str(e))
 
 streamlit.stop()
 
 streamlit.header("Fruityvice Fruit Advice!")
 fruit_choice = streamlit.text_input('¿Qué fruta le gustaría añadir?', 'Kiwi')
 streamlit.write('El usuario ingresó ', fruit_choice)
-streamlit.write('Thanks for adding', fruit_choice)
-my_cur = my_cnx.cursor()
-my_cur.execute("insert into fruit_load_list values ('from streamlit')")
-my_cnx.commit()
+
+if streamlit.button('Add fruit to Snowflake'):
+    try:
+        my_cur = my_cnx.cursor()
+        my_cur.execute("INSERT INTO fruit_load_list VALUES ('from streamlit')")
+        my_cnx.commit()
+        streamlit.success(f"Successfully added {fruit_choice} to Snowflake!")
+    except Exception as e:
+        streamlit.error("Error adding data to Snowflake.")
+        streamlit.error(str(e))
+
