@@ -1,5 +1,5 @@
 import streamlit
-import pandas
+import pandas 
 import snowflake.connector
 import requests
 from urllib.error import URLError
@@ -31,8 +31,6 @@ def get_fruityvice_data(this_fruit_choice):
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
-my_cnx = None  # Inicializa la variable my_cnx
-
 try:
     fruit_choice = streamlit.text_input('¿Sobre qué fruta le gustaría obtener información?', 'Kiwi')
     if not fruit_choice:
@@ -46,21 +44,20 @@ except URLError as e:
 
 def get_fruit_load_list():
     with my_cnx.cursor() as my_cur:
-        my_cur.execute("select * from fruit_load_list")
+        my_cur.execute("SELECT * from fruit_load_list")
     return my_cur.fetchall()
 
 if streamlit.button('Get fruit load list'):
     my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
     my_data_row = get_fruit_load_list()
     streamlit.text(my_data_row)
-    
-streamlit.stop()    
 
-streamlit.header("Fruityvice Fruit !")
+streamlit.stop()
+
+streamlit.header("Fruityvice Fruit Advice!")
 fruit_choice = streamlit.text_input('¿Qué fruta le gustaría añadir?', 'Kiwi')
 streamlit.write('El usuario ingresó ', fruit_choice)
 streamlit.write('Thanks for adding', fruit_choice)
-
-if my_cnx:  # Comprueba si my_cnx está definido
-    my_cur = my_cnx.cursor()
-    my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+my_cur = my_cnx.cursor()
+my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+my_cnx.commit()
