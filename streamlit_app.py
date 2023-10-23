@@ -60,11 +60,11 @@ if streamlit.button('Get fruit load list'):
         streamlit.error("Error connecting to Snowflake or retrieving data.")
         streamlit.error(str(e))
 
-streamlit.stop()
+
 def insert_row_snowflake(new_fruit):
      with my_cnx.cursor() as my_cur:
         my_cur.execute("insert into fruit_load_list values ('from streamlit')")
-     return "Thansk for adding " + new_fruit
+        return "Thansk for adding " + new_fruit
 
 add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 
@@ -73,13 +73,6 @@ if streamlit.button('Add a Fruit to the List'):
         back_from_function = insert_row_snowflake(add_my_fruit)
         streamlit.text(back_from_function)
 
-if streamlit.button('Add fruit to Snowflake'):
-    try:
-        my_cur = my_cnx.cursor()
-        streamlit.success(f"Successfully added {fruit_choice} to Snowflake!")
-    except Exception as e:
-        streamlit.error("Error adding data to Snowflake.")
-        streamlit.error(str(e))
 
 
 
