@@ -50,3 +50,7 @@ streamlit.text(my_data_row)
 streamlit.header("Fruityvice Fruit Advice!")
 fruit_choice = streamlit.text_input('¿Que fruta le gustaria añadir?','Kiwi') 
 streamlit.write('El usuario ingresó ', fruit_choice)
+
+stramlit.write('Thanks for adding',add_my_fruit)
+my_cur.execute("insert into fruit_load_list values ('from streamlit')")
+
